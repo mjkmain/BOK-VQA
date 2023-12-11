@@ -18,7 +18,8 @@ import transformers
 import torchvision.models as models
 import argparse
 
-
+data_dir = "PATH/TO/DATA_DIR"
+kge_dir = "PATH/TO/KGE_DIR"
 
 class AverageMeter:
     def __init__(self):
@@ -94,12 +95,11 @@ def get_KGE(config, kge_data='all', kge_model='complex'):
         'Analogy' : AnalogyModel
     }
 
-    with open(f'./kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}_config.pkl', 'rb') as f:
+    with open(os.path.join(kge_dir, f'kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}_config.pkl', 'rb')) as f:
         kge_config = pickle.load(f)
 
-    with open(f'./kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}_kg.pkl', 'rb') as f:
+    with open(os.path.join(kge_dir, f'kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}_kg.pkl', 'rb')) as f:
         kg = pickle.load(f)
-
 
     model = kge_dict[kge_model]
 
@@ -131,7 +131,7 @@ def get_KGE(config, kge_data='all', kge_model='complex'):
                          kge_config['n_rel']
                          )
       
-    KGEModel.load_state_dict(torch.load(f'./kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}.pt'))
+    KGEModel.load_state_dict(torch.load(os.path.join(kge_dir, f'kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}.pt')))
             
     emb_entity_ = KGEModel.get_embeddings()[0].detach().cpu().numpy()
     emb_rel_ = KGEModel.get_embeddings()[1].detach().cpu().numpy()
@@ -169,12 +169,12 @@ def get_tokenizer():
 def get_data(args):
 
     if args.lang == 'bi':
-        data_ko = pd.read_csv(f"./data/BOKVQA_data_ko.csv")
-        data_en = pd.read_csv(f"./data/BOKVQA_data_en.csv")
+        data_ko = pd.read_csv(os.path.join(data_dir, "BOKVQA_data_ko.csv"))
+        data_en = pd.read_csv(os.path.join(data_dir, "BOKVQA_data_en.csv"))
         data = pd.concat([data_ko, data_en])
     
     else:
-        data = pd.read_csv(f'./data/BOKVQA_data_{args.lang}.csv')
+        data = pd.read_csv(os.path.join(data_dir, f'BOKVQA_data_{args.lang}.csv'))
 
     train_data = data[data[f'fold']!=args.fold].reset_index(drop=True)
     valid_data = data[data[f'fold']==args.fold].reset_index(drop=True)
@@ -189,8 +189,8 @@ def get_data(args):
     return train_data, valid_data, triple_ans_list, triple_target_num, ans_list, len(ans_list)
 
 def get_answer_dict():
-    ko_data = pd.read_csv("./data/BOKVQA_data_ko.csv")
-    en_data = pd.read_csv("./data/BOKVQA_data_en.csv")
+    ko_data = pd.read_csv(os.path.join(data_dir, "BOKVQA_data_ko.csv"))
+    en_data = pd.read_csv(os.path.join(data_dir, "BOKVQA_data_en.csv"))
     data = pd.concat([ko_data, en_data])
 
     ko_data_ = ko_data[['img_path', 'answer']].rename(columns={'answer': 'answer_ko'})
