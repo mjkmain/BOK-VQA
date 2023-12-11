@@ -1,5 +1,5 @@
-# [AAAI2024] BOK-VQA
-BOK-VQA : Bilingual Outside Knowledge-based Visual Question Answering via Graph Representation Pretraining
+# BOK-VQA
+[AAAI2024]BOK-VQA : Bilingual Outside Knowledge-based Visual Question Answering via Graph Representation Pretraining
 
 ## BOK-VQA Dataset
 BOK-VQA dataset comprising 17,836 samples and 282,533 knowledge triples. Each sample contained of an image, question, answer, and $k$ external knowledge IDs that are necessary to solve a question.
