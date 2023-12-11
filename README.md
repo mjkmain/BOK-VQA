@@ -4,7 +4,7 @@ BOK-VQA : Bilingual Outside Knowledge-based Visual Question Answering via Graph 
 ## BOK-VQA Dataset
 BOK-VQA dataset comprising 17,836 samples and 282,533 knowledge triples. Each sample contained of an image, question, answer, and $k$ external knowledge IDs that are necessary to solve a question.
 
-we assembled 282,533 triple knowledge entries comprising 1,579 objects and 42 relations from English ConceptNet and DBpedia. The selection criteria for the objects and relations were principally based on the 500 objects and 10 relations used in the FVQA dataset. In addition, considering the usage frequency, we incorporated 1,079 objects derived from ImageNet[(link)](https://www.image-net.org/index.php) and supplemented 32 additional relations.
+we assembled 282,533 triple knowledge entries comprising 1,579 objects and 42 relations from English ConceptNet and DBpedia. The selection criteria for the objects and relations were principally based on the 500 objects and 10 relations used in the FVQA dataset. In addition, considering the usage frequency, we incorporated 1,079 objects derived from ImageNet and supplemented 32 additional relations.
 
 ## GEL-VQA Model architecture
 (GEL-VQA : Graph-Embeded Learning-based Visual Question Answering.)
