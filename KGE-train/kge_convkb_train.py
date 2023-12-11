@@ -34,7 +34,7 @@ def train_kge(iters=50000, lr=1e-4, batch_size=512, margin=0.5):
     }
     args = SimpleNamespace(**config)
 
-    data = pd.read_csv(f"./data/{args.version}_triple.csv")
+    data = pd.read_csv(f"../data/{args.version}_triple.csv")
 
     triple_list = []
     for index in tqdm(range(len(data))):
