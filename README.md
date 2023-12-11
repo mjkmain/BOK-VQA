@@ -1,8 +1,22 @@
 # [AAAI2024] BOK-VQA
 BOK-VQA : Bilingual Outside Knowledge-based Visual Question Answering via Graph Representation Pretraining
 
-# BOK-VQA
+## BOK-VQA Dataset
+BOK-VQA dataset comprising 17,836 samples and 282,533 knowledge triples. Each sample contained of an image, question, answer, and $k$ external knowledge IDs that are necessary to solve a question.
 
+we assembled 282,533 triple knowledge entries comprising 1,579 objects and 42 relations from English ConceptNet and DBpedia. The selection criteria for the objects and relations were principally based on the 500 objects and 10 relations used in the FVQA dataset. In addition, considering the usage frequency, we incorporated 1,079 objects derived from ImageNet[(link)](https://www.image-net.org/index.php) and supplemented 32 additional relations.
+
+## GEL-VQA Model architecture
+(GEL-VQA : Graph-Embeded Learning-based Visual Question Answering.)
+In the context of VQA that uses external knowledge, it is unrealistic to assume that one possesses external knowledge pertaining to the given images and questions. Consequently, we proposed the GEL-VQA model that employs a multitask learning approach to perform triple prediction and uses the predicted triples as 
+external knowledge.
+![GEL-VQA](https://github.com/mjkmain/BOK-VQA/assets/72269271/fcc7f28a-c022-40f5-96d2-43657a09a021)
+
+## Experiment results
+![image](https://github.com/mjkmain/BOK-VQA/assets/72269271/d8184ebc-6dd6-4bad-96ea-efc7a6232928)
+
+
+# Training & Test Code
 ## Overview
 
 You can find the preprocessed CSV data in the `data` directory.
