@@ -153,11 +153,10 @@ The `file_name` is organized as follows:
 The `model_name` corresponds to:
 
 * BASE : BASELINE model
-
-
-### Contact
-mjkmain20@gmail.com
 * GEL-Ideal : GEL-VQA-Ideal model
 * GEL : GEL-VQA model
 * GEL-TF : GEL-VQA-TF model
 * GEL-TF-ATTN : GEL-VQA-TF-ATTN model
+
+### Contact
+mjkmain20@gmail.com
