@@ -36,24 +36,10 @@ You can find the preprocessed CSV data in the `data` directory.
 
 ## 1. Download the image file.
 
-You can download the image files via [G-drive](https://drive.google.com/file/d/1SpOntv2ZIwyNW-JghUc7myJkC9PLs4_H/view?usp=drive_link) or [AI-hub](https://aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=71357)
+> This section is skipped while using huggingface's datasets. You can find our dataset at https://huggingface.co/datasets/mjkmain/bok-vqa-dataset. 
 
-After the download is complete, place the image directory inside the data directory.
 
-Your directory structure will then look like this:
-```
-┗━━━ data
-      ┣━━━ image
-      ┃     ┗━━━ 121100220220707140119.jpg
-      ┃     ┗━━━ 121100220220707140304.jpg
-      ┃     ┗━━━ 121100520220830104341.jpg
-      ┃     ┗━━━ ...
-      ┗━━━ all_triple.csv
-      ┗━━━ BOKVQA_data_en.csv
-      ┗━━━ BOKVQA_data_ko.csv
-      ┗━━━ BOKVQA_data_test_en.csv
-      ┗━━━ BOKVQA_data_test_ko.csv
-```
+
 
 ## 2. Installation all requirements.
 
