@@ -64,27 +64,27 @@ When the end of the training, you'll find the saved files in the `kge_save` dire
 * To train the BASELINE model, use the following command:
 
 ```bash
-python train_baseline.py --lang ['ko', 'en', 'bi'] --fold [1-5]
+python train_baseline.py --lang ['ko', 'en', 'bi'] 
 ```
 
 * To train the GEL-VQA-Ideal model, use the following command:
 ```bash
-python train_GEL-VQA_Ideal.py --lang ['ko', 'en', 'bi'] -- fold [1-5]
+python train_GEL-VQA_Ideal.py --lang ['ko', 'en', 'bi'] 
 ```
 
 * To train the GEL-VQA model, use the following command:
 ```bash
-python train_GEL-VQA.py --lang ['ko', 'en', 'bi'] -- fold [1-5]
+python train_GEL-VQA.py --lang ['ko', 'en', 'bi'] 
 ```
 
 * To train the GEL-VQA-TF model, use the following command:
 ```bash
-python train_GEL-VQA-TF.py --lang ['ko', 'en', 'bi'] -- fold [1-5]
+python train_GEL-VQA-TF.py --lang ['ko', 'en', 'bi'] 
 ```
 
 * To train the GEL-VQA-TF-ATTN model, use the following command:
 ```bash
-python train_GEL-VQA-TF-ATTN.py --lang ['ko', 'en', 'bi'] -- fold [1-5]
+python train_GEL-VQA-TF-ATTN.py --lang ['ko', 'en', 'bi'] 
 ```
 
 ### arguments
