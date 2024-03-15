@@ -20,7 +20,10 @@ import argparse
 from datasets import load_dataset
 import datasets
 
-kge_dir = "/home/nips/BOK-VQA/bokvqa/KGE-train"
+if __name__ == "__main__":
+    print(os.getcwd())
+
+kge_dir = "/PATH/TO/SAVED-KGE"
 
 class AverageMeter:
     def __init__(self):

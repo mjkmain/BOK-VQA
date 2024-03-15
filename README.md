@@ -17,6 +17,11 @@ external knowledge.
 
 
 # Training & Test Code
+
+`git clone` and add python path via
+
+`export PYTHONPATH="$(pwd):$PYTHONPATH"` in the BOK-VQA directory.
+
 ## Overview
 
 You can find the preprocessed CSV data in the `data` directory.
@@ -65,6 +70,8 @@ python kge_convkb_train.py
 ```
 
 When the end of the training, you'll find the saved files in the `kge_save` directory.
+
+> You need to change the kge_dir path in the `util_functions.py' 
 
 ## 4. Train the VQA model
 
