@@ -18,36 +18,26 @@ external knowledge.
 
 # Training & Test Code
 
-`git clone` and add python path via
 
-`export PYTHONPATH="$(pwd):$PYTHONPATH"` in the BOK-VQA directory.
 
 ## Overview
 
-You can find the preprocessed CSV data in the `data` directory.
-
-- **all_triple.csv** : The entire knowledge base consisting of 282,533 triples.
-- **BOKVQA_data_en.csv**: English BOKVQA data for training.
-- **BOKVQA_data_test_en.csv**: English BOKVQA data for testing.
-
-- **BOKVQA_data_ko.csv**: Korean BOKVQA data for training.
-- **BOKVQA_data_test_ko.csv**: Korean BOKVQA data for testing.
-
-
-## 1. Download the image file.
-
-> This section is skipped while using huggingface's datasets. You can find our dataset at https://huggingface.co/datasets/mjkmain/bok-vqa-dataset. 
+> You can find our dataset at https://huggingface.co/datasets/mjkmain/bok-vqa-dataset. 
 
 
 
+## 1. Installation all requirements.
 
-## 2. Installation all requirements.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 3. Train KGE 
+`git clone` and add python path via
+
+`export PYTHONPATH="$(pwd):$PYTHONPATH"` in the BOK-VQA directory.
+
+## 2. Train KGE 
 
 First, we need to train the KGE before training the VQA model.
 
@@ -59,7 +49,7 @@ When the end of the training, you'll find the saved files in the `kge_save` dire
 
 **You need to change the `kge_dir` path in the `util_functions.py' **
 
-## 4. Train the VQA model
+## 3. Train the VQA model
 
 * To train the BASELINE model, use the following command:
 
@@ -110,7 +100,7 @@ The default value of `fold` is 1
 
 After training, you can find the saved VQA model file in the saved_model directory.
 
-## 5. Test
+## 4. Test
 
 * To test the BASELINE model, use the following command:
 ```bash
@@ -152,4 +142,4 @@ The `model_name` corresponds to:
 * GEL-TF-ATTN : GEL-VQA-TF-ATTN model
 
 ### Contact
-mjkmain20@gmail.com
+mjkmain@seoultech.ac.kr
