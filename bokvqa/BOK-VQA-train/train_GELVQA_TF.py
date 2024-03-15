@@ -1,26 +1,17 @@
 import tqdm
 import torch
-from transformers import AutoTokenizer, logging
-import torchvision.transforms as transforms
+from transformers import logging
 import torch.optim as optim
 import torch.nn as nn
 from torch.utils.data import DataLoader
-import pandas as pd
-from torchkge.models import ConvKBModel
-import pickle 
-import transformers
 import os
 import warnings
-import torchvision.models as models  
-from tqdm import tqdm, trange
-import re
-import random
-import numpy as np
-import json
+from tqdm import tqdm
 from copy import deepcopy
-from util_functions import *
-from vqa_models import *
-from vqa_datasets import *
+
+from bokvqa.vqa_datasets import GELVQADataset
+from bokvqa.util_functions import *
+from bokvqa.vqa_models import *
 
 logging.set_verbosity_error()
 
@@ -29,7 +20,7 @@ os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 args = get_arguments()
-version = f"GEL-TF=_{args.lang}_fold{args.fold}"
+version = f"GEL-TF_{args.lang}"
 
 if not os.path.exists(f"./{get_save_path()}"):
     os.makedirs(f"./{get_save_path()}")

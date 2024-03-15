@@ -1,4 +1,4 @@
-from util_functions import *
+from bokvqa.util_functions import *
 from torch import nn
 
 class BaselineModel(nn.Module):

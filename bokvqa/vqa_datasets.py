@@ -15,10 +15,10 @@ class BaselineDataset(torch.utils.data.Dataset):
         return len(self.data)
     
     def __getitem__(self, index):
-        
-        question = self.data['question'][index]
-        answer = self.data['answer'][index] 
-        img = self.data['img'][index] 
+        cur_data = self.data[index]
+        question = cur_data['question']
+        answer = cur_data['answer'] 
+        img = cur_data['img']
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -53,10 +53,10 @@ class BaselineTestDataset(torch.utils.data.Dataset):
         return len(self.data)
     
     def __getitem__(self, index):
-        
-        question = self.data['question'][index]
-        answer = self.data['answer'][index] 
-        img = self.data['img'][index] 
+        cur_data = self.data[index]
+        question = cur_data['question']
+        answer = cur_data['answer'] 
+        img = cur_data['img']
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -96,8 +96,10 @@ class GELVQAIdealDataset(torch.utils.data.Dataset):
         return len(self.data)
     
     def __getitem__(self, index):
-        question = self.data['question'][index]
-        answer = self.data['answer'][index] 
+        cur_data = self.data[index]
+        question = cur_data['question']
+        answer = cur_data['answer'] 
+        img = cur_data['img']
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -110,12 +112,11 @@ class GELVQAIdealDataset(torch.utils.data.Dataset):
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
 
-        img = self.data['img'][index] 
         image = img.convert('RGB')  
         image = self.transform(image) 
         
         answer_idx = self.gold_ans_list.index(answer)
-        h, r, t = self.data['h'][index], self.data['r'][index], self.data['t'][index]
+        h, r, t = cur_data['head'], cur_data['relation'], cur_data['tail']
         h_emb = self.emb_entity_[self.kg.ent2ix[h]]
         r_emb = self.emb_rel_[self.kg.rel2ix[r]]
         t_emb = self.emb_entity_[self.kg.ent2ix[t]]
@@ -147,8 +148,10 @@ class GELVQAIdealTestDataset(torch.utils.data.Dataset):
         return len(self.data)
     
     def __getitem__(self, index):
-        question = self.data['question'][index]
-        answer = self.data['answer'][index] 
+        cur_data = self.data[index]
+        question = cur_data['question']
+        answer = cur_data['answer'] 
+        img = cur_data['img']
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -161,11 +164,10 @@ class GELVQAIdealTestDataset(torch.utils.data.Dataset):
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
 
-        img = self.data['img'][index] 
         image = img.convert('RGB')  
         image = self.transform(image) 
         
-        h, r, t = self.data['h'][index], self.data['r'][index], self.data['t'][index]
+        h, r, t = cur_data['head'], cur_data['relation'], cur_data['tail']
         h_emb = self.emb_entity_[self.kg.ent2ix[h]]
         r_emb = self.emb_rel_[self.kg.rel2ix[r]]
         t_emb = self.emb_entity_[self.kg.ent2ix[t]]
@@ -198,9 +200,10 @@ class GELVQADataset(torch.utils.data.Dataset):
         return len(self.data)
     
     def __getitem__(self, index):
-        question = self.data['question'][index]
-        answer = self.data['answer'][index] 
-        img = self.data['img'][index] 
+        cur_data = self.data[index]
+        question = cur_data['question']
+        answer = cur_data['answer'] 
+        img = cur_data['img']
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -216,7 +219,7 @@ class GELVQADataset(torch.utils.data.Dataset):
         image = self.transform(image) 
         
         answer_idx = self.gold_ans_list.index(answer)
-        h, r, t = self.data['h'][index], self.data['r'][index], self.data['t'][index]
+        h, r, t = cur_data['head'], cur_data['relation'], cur_data['tail']
         h_label = self.triple_ans_list['h'].index(h)
         r_label = self.triple_ans_list['r'].index(r)
         t_label = self.triple_ans_list['t'].index(t)
@@ -251,9 +254,10 @@ class GELVQATestDataset(torch.utils.data.Dataset):
         return len(self.data)
     
     def __getitem__(self, index):
-        question = self.data['question'][index]
-        answer = self.data['answer'][index] 
-        img = self.data['img'][index] 
+        cur_data = self.data[index]
+        question = cur_data['question']
+        answer = cur_data['answer'] 
+        img = cur_data['img']
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,

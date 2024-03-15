@@ -20,7 +20,7 @@ import argparse
 from datasets import load_dataset
 import datasets
 
-kge_dir = "/home/nips/BOK-VQA/KGE-train"
+kge_dir = "/home/nips/BOK-VQA/bokvqa/KGE-train"
 
 class AverageMeter:
     def __init__(self):
@@ -96,10 +96,10 @@ def get_KGE(config, kge_data='all', kge_model='convkb'):
         'Analogy' : AnalogyModel
     }
 
-    with open(os.path.join(kge_dir, f'kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}_config.pkl', 'rb')) as f:
+    with open(os.path.join(kge_dir, f'kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}_config.pkl'), 'rb') as f:
         kge_config = pickle.load(f)
 
-    with open(os.path.join(kge_dir, f'kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}_kg.pkl', 'rb')) as f:
+    with open(os.path.join(kge_dir, f'kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}_kg.pkl'), 'rb') as f:
         kg = pickle.load(f)
 
     model = kge_dict[kge_model]
@@ -172,21 +172,21 @@ def get_data(args):
 
     if args.lang == 'ko':
         data = data.remove_columns("question_en")
-        data.rename_column('question_en', 'question')
+        data = data.rename_column('question_ko', 'question')
         train_data = data['train']
         valid_data = data['validation']
 
     if args.lang == 'en':
         data = data.remove_columns("question_ko")
-        data.rename_column('question_ko', 'question')
+        data = data.rename_column('question_en', 'question')
         train_data = data['train']
         valid_data = data['validation']
 
     if args.lang == 'bi':
         data_ko = data.remove_columns("question_en")
-        data_ko.rename_column('question_en', 'question')
+        data_ko = data_ko.rename_column('question_ko', 'question')
         data_en = data.remove_columns("question_ko")
-        data_en.rename_column('question_ko', 'question')
+        data_en = data_en.rename_column('question_en', 'question')
         train_data = datasets.concatenate_datasets([data_ko['train'], data_en['train']])
         valid_data = datasets.concatenate_datasets([data_ko['validation'], data_en['validation']])
 

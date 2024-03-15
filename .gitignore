@@ -1,3 +1,5 @@
 bokvqa/make_dataset/
 .bok-vqa/
 bokvqa/KGE-train/kge_save/
+bokvqa/BOK-VQA-train/saved_model/
+__pycache__/

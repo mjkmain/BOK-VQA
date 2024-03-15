@@ -1,27 +1,13 @@
-import tqdm
 import torch
-from transformers import AutoTokenizer, logging
-import torchvision.transforms as transforms
-import torch.optim as optim
-import torch.nn as nn
-from torch.utils.data import DataLoader
+from transformers import logging
 import pandas as pd
-from torchkge.models import ConvKBModel
-import pickle 
-import transformers
 import os
 import warnings
-import torchvision.models as models  
-from tqdm import tqdm, trange
-import re
-import random
-import numpy as np
-import json
-from copy import deepcopy
-from util_functions import *
-from vqa_models import *
-from vqa_datasets import *
-from types import SimpleNamespace
+from tqdm import trange
+
+from bokvqa.vqa_datasets import BaselineTestDataset
+from bokvqa.util_functions import *
+from bokvqa.vqa_models import *
 
 logging.set_verbosity_error()
 
