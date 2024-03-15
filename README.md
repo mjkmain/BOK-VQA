@@ -57,7 +57,7 @@ python kge_convkb_train.py
 
 When the end of the training, you'll find the saved files in the `kge_save` directory.
 
-> You need to change the kge_dir path in the `util_functions.py' 
+**You need to change the `kge_dir` path in the `util_functions.py' **
 
 ## 4. Train the VQA model
 
