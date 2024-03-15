@@ -18,6 +18,8 @@ from torchkge.data_structures import KnowledgeGraph
 from types import SimpleNamespace
 import pickle
 import sys
+from datasets import load_dataset
+data_name_or_path = "mjkmain/bokvqa-knowledge-base"
 
 def train_kge(iters=50000, lr=1e-4, batch_size=512, margin=0.5):
 
@@ -34,18 +36,14 @@ def train_kge(iters=50000, lr=1e-4, batch_size=512, margin=0.5):
     }
     args = SimpleNamespace(**config)
 
-    data = pd.read_csv(f"../data/{args.version}_triple.csv")
+    data = load_dataset(data_name_or_path)
+    data = data['train']
 
-    triple_list = []
-    for index in tqdm(range(len(data))):
-        
-        triple_dict = {}
-        triple_dict["head"] = str(data['h'][index])
-        triple_dict["relation"] = str(data['r'][index])
-        triple_dict["tail"] = str(data['t'][index])
-    
-        triple_list.append(triple_dict)
-    df = pd.DataFrame(triple_list).drop_duplicates().reset_index(drop=True)
+    df = pd.DataFrame.from_dict({
+            "head":data['head'], 
+            "relation":data['relation'], 
+            "tail":data['tail']
+        })
     
     ratingmap = {rate : i for i , rate in enumerate(df['relation'])}
     entity_ori = np.concatenate([df['head'].values ,df['tail'].values])
@@ -66,8 +64,9 @@ def train_kge(iters=50000, lr=1e-4, batch_size=512, margin=0.5):
     kg = KnowledgeGraph(df2)
     kg_train = kg
 
-    model_convEx = ConvKBModel(args.emb_dim,
-                               args.n_filter,
+    model_convEx = ConvKBModel(
+                            args.emb_dim,
+                            args.n_filter,
                             kg_train.n_ent,
                             kg_train.n_rel,
                             )
