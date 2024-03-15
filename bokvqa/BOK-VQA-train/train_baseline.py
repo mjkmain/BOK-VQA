@@ -28,7 +28,7 @@ os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 args = get_arguments()
-version = f"BASE_{args.lang}_fold{args.fold}"
+version = f"BASE_{args.lang}"
 
 if not os.path.exists(f"./{get_save_path()}"):
     os.makedirs(f"./{get_save_path()}")

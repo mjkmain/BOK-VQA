@@ -17,9 +17,10 @@ from transformers import AutoTokenizer
 import transformers
 import torchvision.models as models
 import argparse
+from datasets import load_dataset
+import datasets
 
-data_dir = "PATH/TO/DATA_DIR"
-kge_dir = "PATH/TO/KGE_DIR"
+kge_dir = "/home/nips/BOK-VQA/KGE-train"
 
 class AverageMeter:
     def __init__(self):
@@ -80,7 +81,7 @@ def save_config(version, config):
                 output = f"{d} : {getattr(config, d)}\n"
                 f.write(output)
 
-def get_KGE(config, kge_data='all', kge_model='complex'):
+def get_KGE(config, kge_data='all', kge_model='convkb'):
     kge_dict = {
         'TransE' : TransEModel,
         'TransH' : TransHModel,
@@ -167,40 +168,52 @@ def get_tokenizer():
     return tokenizer
 
 def get_data(args):
+    data = load_dataset("mjkmain/bok-vqa-dataset")
+
+    if args.lang == 'ko':
+        data = data.remove_columns("question_en")
+        data.rename_column('question_en', 'question')
+        train_data = data['train']
+        valid_data = data['validation']
+
+    if args.lang == 'en':
+        data = data.remove_columns("question_ko")
+        data.rename_column('question_ko', 'question')
+        train_data = data['train']
+        valid_data = data['validation']
 
     if args.lang == 'bi':
-        data_ko = pd.read_csv(os.path.join(data_dir, "BOKVQA_data_ko.csv"))
-        data_en = pd.read_csv(os.path.join(data_dir, "BOKVQA_data_en.csv"))
-        data = pd.concat([data_ko, data_en])
-    
-    else:
-        data = pd.read_csv(os.path.join(data_dir, f'BOKVQA_data_{args.lang}.csv'))
+        data_ko = data.remove_columns("question_en")
+        data_ko.rename_column('question_en', 'question')
+        data_en = data.remove_columns("question_ko")
+        data_en.rename_column('question_ko', 'question')
+        train_data = datasets.concatenate_datasets([data_ko['train'], data_en['train']])
+        valid_data = datasets.concatenate_datasets([data_ko['validation'], data_en['validation']])
 
-    train_data = data[data[f'fold']!=args.fold].reset_index(drop=True)
-    valid_data = data[data[f'fold']==args.fold].reset_index(drop=True)
 
-    h_list = sorted(list(set(data['h'])))
-    r_list = sorted(list(set(data['r'])))
-    t_list = sorted(list(set(data['t'])))
+    h_list = sorted(list(set(train_data['head'] + valid_data['head'])))
+    r_list = sorted(list(set(train_data['relation'] + valid_data['relation'])))
+    t_list = sorted(list(set(train_data['tail'] + valid_data['tail'])))
+
     triple_ans_list = {"h":h_list, "r":r_list, "t":t_list}
     triple_target_num = {"h":len(h_list), "r":len(r_list), "t":len(t_list)}
 
-    ans_list = sorted(list(pd.concat([train_data, valid_data], axis=0)['answer'].unique()))
+    ans_list = sorted(list(train_data['answer'] + valid_data['answer']))
     return train_data, valid_data, triple_ans_list, triple_target_num, ans_list, len(ans_list)
 
-def get_answer_dict():
-    ko_data = pd.read_csv(os.path.join(data_dir, "BOKVQA_data_ko.csv"))
-    en_data = pd.read_csv(os.path.join(data_dir, "BOKVQA_data_en.csv"))
-    data = pd.concat([ko_data, en_data])
+# def get_answer_dict():
+#     ko_data = pd.read_csv(os.path.join(data_dir, "BOKVQA_data_ko.csv"))
+#     en_data = pd.read_csv(os.path.join(data_dir, "BOKVQA_data_en.csv"))
+#     data = pd.concat([ko_data, en_data])
 
-    ko_data_ = ko_data[['img_path', 'answer']].rename(columns={'answer': 'answer_ko'})
-    en_data_ = en_data[['img_path', 'answer']].rename(columns={'answer': 'answer_en'})
+#     ko_data_ = ko_data[['img_path', 'answer']].rename(columns={'answer': 'answer_ko'})
+#     en_data_ = en_data[['img_path', 'answer']].rename(columns={'answer': 'answer_en'})
 
-    merged_data = pd.merge(ko_data_, en_data_, on='img_path')
-    k2e_answer_dict = pd.Series(merged_data.answer_en.values,index=merged_data.answer_ko).to_dict()
-    e2k_answer_dict = pd.Series(merged_data.answer_ko.values,index=merged_data.answer_en).to_dict()
+#     merged_data = pd.merge(ko_data_, en_data_, on='img_path')
+#     k2e_answer_dict = pd.Series(merged_data.answer_en.values,index=merged_data.answer_ko).to_dict()
+#     e2k_answer_dict = pd.Series(merged_data.answer_ko.values,index=merged_data.answer_en).to_dict()
 
-    return k2e_answer_dict, e2k_answer_dict
+#     return k2e_answer_dict, e2k_answer_dict
 
 def get_num_workers():
     return 5
@@ -220,7 +233,6 @@ def get_image_model():
 def get_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("--lang", type=str, required=True, choices=['ko', 'en', 'bi'])
-    parser.add_argument("--fold", type=int, required=False, default=1)
     parser.add_argument("--kge_data", type=str, required=False, default='all')
     parser.add_argument("--kge_model", type=str, required=False, choices=['complex', 'convkb','TransE', 'TransH',
                                                                           'TransR', 'TransD', 'TorusE', 'RESCAL',
@@ -231,7 +243,6 @@ def get_arguments():
 def get_test_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("--lang", type=str, required=True, choices=['ko', 'en', 'bi'])
-    parser.add_argument("--fold", type=int, required=False, default=1)
     parser.add_argument("--kge_data", type=str, required=False, default='all')
     parser.add_argument("--kge_model", type=str, required=False, choices=['complex', 'convkb','TransE', 'TransH',
                                                                           'TransR', 'TransD', 'TorusE', 'RESCAL',

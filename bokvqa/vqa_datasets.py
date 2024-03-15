@@ -18,7 +18,7 @@ class BaselineDataset(torch.utils.data.Dataset):
         
         question = self.data['question'][index]
         answer = self.data['answer'][index] 
-        img_loc = self.data['img_path'][index] 
+        img = self.data['img'][index] 
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -30,7 +30,7 @@ class BaselineDataset(torch.utils.data.Dataset):
         
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
-        image = Image.open(img_loc).convert('RGB')  
+        image = img.convert('RGB')  
         image = self.transform(image) 
 
         answer_idx = self.gold_ans_list.index(answer)
@@ -56,7 +56,7 @@ class BaselineTestDataset(torch.utils.data.Dataset):
         
         question = self.data['question'][index]
         answer = self.data['answer'][index] 
-        img_loc = self.data['img_path'][index] 
+        img = self.data['img'][index] 
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -68,7 +68,7 @@ class BaselineTestDataset(torch.utils.data.Dataset):
         
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
-        image = Image.open(img_loc).convert('RGB')  
+        image = img.convert('RGB')  
         image = self.transform(image) 
 
 
@@ -110,8 +110,8 @@ class GELVQAIdealDataset(torch.utils.data.Dataset):
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
 
-        img_path = self.data['img_path'][index] 
-        image = Image.open(img_path).convert('RGB')  
+        img = self.data['img'][index] 
+        image = img.convert('RGB')  
         image = self.transform(image) 
         
         answer_idx = self.gold_ans_list.index(answer)
@@ -161,8 +161,8 @@ class GELVQAIdealTestDataset(torch.utils.data.Dataset):
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
 
-        img_path = self.data['img_path'][index] 
-        image = Image.open(img_path).convert('RGB')  
+        img = self.data['img'][index] 
+        image = img.convert('RGB')  
         image = self.transform(image) 
         
         h, r, t = self.data['h'][index], self.data['r'][index], self.data['t'][index]
@@ -200,7 +200,7 @@ class GELVQADataset(torch.utils.data.Dataset):
     def __getitem__(self, index):
         question = self.data['question'][index]
         answer = self.data['answer'][index] 
-        img_loc = self.data['img_path'][index] 
+        img = self.data['img'][index] 
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -212,7 +212,7 @@ class GELVQADataset(torch.utils.data.Dataset):
         
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
-        image = Image.open(img_loc).convert('RGB')  
+        image = img.convert('RGB')  
         image = self.transform(image) 
         
         answer_idx = self.gold_ans_list.index(answer)
@@ -253,7 +253,7 @@ class GELVQATestDataset(torch.utils.data.Dataset):
     def __getitem__(self, index):
         question = self.data['question'][index]
         answer = self.data['answer'][index] 
-        img_loc = self.data['img_path'][index] 
+        img = self.data['img'][index] 
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -265,7 +265,7 @@ class GELVQATestDataset(torch.utils.data.Dataset):
         
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
-        image = Image.open(img_loc).convert('RGB')  
+        image = img.convert('RGB')  
         image = self.transform(image) 
             
         return {
