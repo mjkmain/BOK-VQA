@@ -1,6 +1,8 @@
 # [AAAI2024]BOK-VQA
 BOK-VQA : Bilingual Outside Knowledge-based Visual Question Answering via Graph Representation Pretraining
 
+Paper Link : https://arxiv.org/abs/2401.06443
+
 ## BOK-VQA Dataset
 BOK-VQA dataset comprising 17,836 samples and 282,533 knowledge triples. Each sample contained of an image, question, answer, and $k$ external knowledge IDs that are necessary to solve a question.
 
@@ -18,12 +20,9 @@ external knowledge.
 
 # Training & Test Code
 
-
-
 ## Overview
 
 > You can find our dataset at https://huggingface.co/datasets/mjkmain/bok-vqa-dataset. 
-
 
 
 ## 1. Run setup.sh
@@ -32,8 +31,6 @@ at /BOK-VQA/, run `setup.sh`
 ```bash
 sh setup.sh
 ```
-
-
 
 ## 2. Train KGE 
 
@@ -45,7 +42,7 @@ python kge_convkb_train.py
 
 When the end of the training, you'll find the saved files in the `kge_save` directory.
 
-**You need to change the `kge_dir` path in the `util_functions.py' **
+**You need to change the `kge_dir` path in the `util_functions.py'**
 
 ## 3. Train the VQA model
 
@@ -79,22 +76,12 @@ python train_GEL-VQA-TF-ATTN.py --lang ['ko', 'en', 'bi']
 - `--lang`: Selects the language for training.
   - `ko`: Korean
   - `en`: English
-  - `bi`: Bilingual
+  - `bi`: Bilingual (both of English and Korean)
 
 Make sure to replace [ko, en, bi] with your choice of language. For example, if you wish to train on English data, your command would be: 
 ```bash
-python train_GEL-VQA_Ideal.py --lang en --fold 1
+python train_GEL-VQA_Ideal.py --lang en 
 ```
-
-- `--fold`: Determines the validation fold.
-  - Value should be an integer between 1 to 5.
-
-For instance, if you wish to train using the third fold, you would use:
-```bash
-python train_GEL-VQA_Ideal.py --lang ko --fold 3
-```
-
-The default value of `fold` is 1
 
 After training, you can find the saved VQA model file in the saved_model directory.
 
@@ -130,14 +117,6 @@ python test_GEL-VQA-TF-ATTN.py --file_name [FILENAME] --lang ['ko', 'en', 'bi']
 The `file_name` is organized as follows:
 
     [model_name]_[lang]_[fold]_[accuracy].pt
-
-The `model_name` corresponds to:
-
-* BASE : BASELINE model
-* GEL-Ideal : GEL-VQA-Ideal model
-* GEL : GEL-VQA model
-* GEL-TF : GEL-VQA-TF model
-* GEL-TF-ATTN : GEL-VQA-TF-ATTN model
 
 ### Contact
 mjkmain@seoultech.ac.kr
