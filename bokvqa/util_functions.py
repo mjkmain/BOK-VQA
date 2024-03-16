@@ -204,20 +204,6 @@ def get_data(args):
     ans_list = sorted(list(train_data['answer'] + valid_data['answer']))
     return train_data, valid_data, triple_ans_list, triple_target_num, ans_list, len(ans_list)
 
-# def get_answer_dict():
-#     ko_data = pd.read_csv(os.path.join(data_dir, "BOKVQA_data_ko.csv"))
-#     en_data = pd.read_csv(os.path.join(data_dir, "BOKVQA_data_en.csv"))
-#     data = pd.concat([ko_data, en_data])
-
-#     ko_data_ = ko_data[['img_path', 'answer']].rename(columns={'answer': 'answer_ko'})
-#     en_data_ = en_data[['img_path', 'answer']].rename(columns={'answer': 'answer_en'})
-
-#     merged_data = pd.merge(ko_data_, en_data_, on='img_path')
-#     k2e_answer_dict = pd.Series(merged_data.answer_en.values,index=merged_data.answer_ko).to_dict()
-#     e2k_answer_dict = pd.Series(merged_data.answer_ko.values,index=merged_data.answer_en).to_dict()
-
-#     return k2e_answer_dict, e2k_answer_dict
-
 def get_num_workers():
     return 5
 
