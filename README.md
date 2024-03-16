@@ -26,16 +26,14 @@ external knowledge.
 
 
 
-## 1. Installation all requirements.
-
+## 1. Run setup.sh
+at /BOK-VQA/, run `setup.sh`
 
 ```bash
-pip install -r requirements.txt
+sh setup.sh
 ```
 
-`git clone` and add python path via
 
-`export PYTHONPATH="$(pwd):$PYTHONPATH"` in the BOK-VQA directory.
 
 ## 2. Train KGE 
 
