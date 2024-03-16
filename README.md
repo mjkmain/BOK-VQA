@@ -26,7 +26,7 @@ external knowledge.
 
 
 ## 1. Run setup.sh
-at /BOK-VQA/, run `setup.sh`
+At /BOK-VQA/, run `setup.sh`
 
 ```bash
 sh setup.sh
