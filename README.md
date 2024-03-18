@@ -22,7 +22,7 @@ external knowledge.
 
 ## Overview
 
-> You can find our dataset at https://huggingface.co/datasets/mjkmain/bok-vqa-dataset. 
+> You can find our dataset at [AI-Hub](https://aihub.or.kr/aihubdata/data/view.do?currMenu=&topMenu=&aihubDataSe=data&dataSetSn=71357)
 
 
 ## 1. Run setup.sh
