@@ -23,7 +23,10 @@ import datasets
 if __name__ == "__main__":
     print(os.getcwd())
 
-kge_dir = "/PATH/TO/SAVED-KGE"
+# KGE_DIR = "/PATH/TO/SAVED-KGE"
+KGE_DIR = "/home/nips/BOK-VQA/bokvqa/KGE-train"
+# DATA_DIR = "/PATH/TO/DATA"
+DATA_DIR = "/home/nips/BOK-VQA/bokvqa/data"
 
 class AverageMeter:
     def __init__(self):
@@ -99,10 +102,10 @@ def get_KGE(config, kge_data='all', kge_model='convkb'):
         'Analogy' : AnalogyModel
     }
 
-    with open(os.path.join(kge_dir, f'kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}_config.pkl'), 'rb') as f:
+    with open(os.path.join(KGE_DIR, f'kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}_config.pkl'), 'rb') as f:
         kge_config = pickle.load(f)
 
-    with open(os.path.join(kge_dir, f'kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}_kg.pkl'), 'rb') as f:
+    with open(os.path.join(KGE_DIR, f'kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}_kg.pkl'), 'rb') as f:
         kg = pickle.load(f)
 
     model = kge_dict[kge_model]
@@ -135,7 +138,7 @@ def get_KGE(config, kge_data='all', kge_model='convkb'):
                          kge_config['n_rel']
                          )
       
-    KGEModel.load_state_dict(torch.load(os.path.join(kge_dir, f'kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}.pt')))
+    KGEModel.load_state_dict(torch.load(os.path.join(KGE_DIR, f'kge_save/{kge_model}_{config.kge_n_iter}_{config.kge_lr}_{config.kge_batch}_{config.kge_margin}_{kge_data}.pt')))
             
     emb_entity_ = KGEModel.get_embeddings()[0].detach().cpu().numpy()
     emb_rel_ = KGEModel.get_embeddings()[1].detach().cpu().numpy()
@@ -171,37 +174,24 @@ def get_tokenizer():
     return tokenizer
 
 def get_data(args):
-    data = load_dataset("mjkmain/bok-vqa-dataset")
+    if args.lang == 'bi':   
+        data_ko = pd.read_csv(os.path.join(DATA_DIR, "BOKVQA_data_ko.csv"))
+        data_en = pd.read_csv(os.path.join(DATA_DIR, "BOKVQA_data_en.csv"))
+        data = pd.concat([data_ko, data_en])
+    
+    else:
+        data = pd.read_csv(os.path.join(DATA_DIR, f'BOKVQA_data_{args.lang}.csv'))
 
-    if args.lang == 'ko':
-        data = data.remove_columns("question_en")
-        data = data.rename_column('question_ko', 'question')
-        train_data = data['train']
-        valid_data = data['validation']
+    train_data = data[data[f'fold']!=1].reset_index(drop=True)
+    valid_data = data[data[f'fold']==1].reset_index(drop=True)
 
-    if args.lang == 'en':
-        data = data.remove_columns("question_ko")
-        data = data.rename_column('question_en', 'question')
-        train_data = data['train']
-        valid_data = data['validation']
-
-    if args.lang == 'bi':
-        data_ko = data.remove_columns("question_en")
-        data_ko = data_ko.rename_column('question_ko', 'question')
-        data_en = data.remove_columns("question_ko")
-        data_en = data_en.rename_column('question_en', 'question')
-        train_data = datasets.concatenate_datasets([data_ko['train'], data_en['train']])
-        valid_data = datasets.concatenate_datasets([data_ko['validation'], data_en['validation']])
-
-
-    h_list = sorted(list(set(train_data['head'] + valid_data['head'])))
-    r_list = sorted(list(set(train_data['relation'] + valid_data['relation'])))
-    t_list = sorted(list(set(train_data['tail'] + valid_data['tail'])))
-
+    h_list = sorted(list(set(data['h'])))
+    r_list = sorted(list(set(data['r'])))
+    t_list = sorted(list(set(data['t'])))
     triple_ans_list = {"h":h_list, "r":r_list, "t":t_list}
     triple_target_num = {"h":len(h_list), "r":len(r_list), "t":len(t_list)}
 
-    ans_list = sorted(list(train_data['answer'] + valid_data['answer']))
+    ans_list = sorted(list(pd.concat([train_data, valid_data], axis=0)['answer'].unique()))
     return train_data, valid_data, triple_ans_list, triple_target_num, ans_list, len(ans_list)
 
 def get_num_workers():

@@ -1,6 +1,9 @@
 import torch
 from PIL import Image 
 import numpy as np
+import os
+
+IMAGE_DIR = "/home/nips/BOK-VQA/bokvqa/data/image"
 
 class BaselineDataset(torch.utils.data.Dataset):
     def __init__(self, tokenizer, data, gold_ans_list, max_token, transform, config):
@@ -15,10 +18,10 @@ class BaselineDataset(torch.utils.data.Dataset):
         return len(self.data)
     
     def __getitem__(self, index):
-        cur_data = self.data[index]
+        cur_data = self.data.iloc[index]
         question = cur_data['question']
         answer = cur_data['answer'] 
-        img = cur_data['img']
+        img_path = os.path.join(IMAGE_DIR, cur_data['img_name'])
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -30,7 +33,7 @@ class BaselineDataset(torch.utils.data.Dataset):
         
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
-        image = img.convert('RGB')  
+        image = Image.open(img_path).convert('RGB')  
         image = self.transform(image) 
 
         answer_idx = self.gold_ans_list.index(answer)
@@ -53,10 +56,10 @@ class BaselineTestDataset(torch.utils.data.Dataset):
         return len(self.data)
     
     def __getitem__(self, index):
-        cur_data = self.data[index]
+        cur_data = self.data.iloc[index]
         question = cur_data['question']
         answer = cur_data['answer'] 
-        img = cur_data['img']
+        img_path = os.path.join(IMAGE_DIR, cur_data['img_name'])
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -68,7 +71,7 @@ class BaselineTestDataset(torch.utils.data.Dataset):
         
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
-        image = img.convert('RGB')  
+        image = Image.open(img_path).convert('RGB')  
         image = self.transform(image) 
 
 
@@ -96,10 +99,10 @@ class GELVQAIdealDataset(torch.utils.data.Dataset):
         return len(self.data)
     
     def __getitem__(self, index):
-        cur_data = self.data[index]
+        cur_data = self.data.iloc[index]
         question = cur_data['question']
         answer = cur_data['answer'] 
-        img = cur_data['img']
+        img_path = os.path.join(IMAGE_DIR, cur_data['img_name'])
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -112,11 +115,11 @@ class GELVQAIdealDataset(torch.utils.data.Dataset):
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
 
-        image = img.convert('RGB')  
+        image = Image.open(img_path).convert('RGB')
         image = self.transform(image) 
         
         answer_idx = self.gold_ans_list.index(answer)
-        h, r, t = cur_data['head'], cur_data['relation'], cur_data['tail']
+        h, r, t = cur_data['h'], cur_data['r'], cur_data['t']
         h_emb = self.emb_entity_[self.kg.ent2ix[h]]
         r_emb = self.emb_rel_[self.kg.rel2ix[r]]
         t_emb = self.emb_entity_[self.kg.ent2ix[t]]
@@ -148,10 +151,10 @@ class GELVQAIdealTestDataset(torch.utils.data.Dataset):
         return len(self.data)
     
     def __getitem__(self, index):
-        cur_data = self.data[index]
+        cur_data = self.data.iloc[index]
         question = cur_data['question']
         answer = cur_data['answer'] 
-        img = cur_data['img']
+        img_path = os.path.join(IMAGE_DIR, cur_data['img_name'])
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -164,10 +167,10 @@ class GELVQAIdealTestDataset(torch.utils.data.Dataset):
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
 
-        image = img.convert('RGB')  
+        image = Image.open(img_path).convert('RGB')
         image = self.transform(image) 
         
-        h, r, t = cur_data['head'], cur_data['relation'], cur_data['tail']
+        h, r, t = cur_data['h'], cur_data['r'], cur_data['t']
         h_emb = self.emb_entity_[self.kg.ent2ix[h]]
         r_emb = self.emb_rel_[self.kg.rel2ix[r]]
         t_emb = self.emb_entity_[self.kg.ent2ix[t]]
@@ -200,10 +203,10 @@ class GELVQADataset(torch.utils.data.Dataset):
         return len(self.data)
     
     def __getitem__(self, index):
-        cur_data = self.data[index]
+        cur_data = self.data.iloc[index]
         question = cur_data['question']
         answer = cur_data['answer'] 
-        img = cur_data['img']
+        img_path = os.path.join(IMAGE_DIR, cur_data['img_name'])
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -215,11 +218,11 @@ class GELVQADataset(torch.utils.data.Dataset):
         
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
-        image = img.convert('RGB')  
+        image = Image.open(img_path).convert('RGB')
         image = self.transform(image) 
         
         answer_idx = self.gold_ans_list.index(answer)
-        h, r, t = cur_data['head'], cur_data['relation'], cur_data['tail']
+        h, r, t = cur_data['h'], cur_data['r'], cur_data['t']
         h_label = self.triple_ans_list['h'].index(h)
         r_label = self.triple_ans_list['r'].index(r)
         t_label = self.triple_ans_list['t'].index(t)
@@ -254,10 +257,10 @@ class GELVQATestDataset(torch.utils.data.Dataset):
         return len(self.data)
     
     def __getitem__(self, index):
-        cur_data = self.data[index]
+        cur_data = self.data.iloc[index]
         question = cur_data['question']
         answer = cur_data['answer'] 
-        img = cur_data['img']
+        img_path = os.path.join(IMAGE_DIR, cur_data['img_name'])
         
         tokenized = self.tokenizer.encode_plus("".join(question),
                                      None,
@@ -269,7 +272,7 @@ class GELVQATestDataset(torch.utils.data.Dataset):
         
         ids = tokenized['input_ids']
         mask = tokenized['attention_mask']
-        image = img.convert('RGB')  
+        image = Image.open(img_path).convert('RGB')
         image = self.transform(image) 
             
         return {

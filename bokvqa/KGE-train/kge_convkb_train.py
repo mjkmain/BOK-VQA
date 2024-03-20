@@ -18,11 +18,9 @@ from torchkge.data_structures import KnowledgeGraph
 from types import SimpleNamespace
 import pickle
 import sys
-from datasets import load_dataset
-data_name_or_path = "mjkmain/bokvqa-knowledge-base"
 
 def train_kge(iters=50000, lr=1e-4, batch_size=512, margin=0.5):
-
+  
     config = {
         'emb_dim' : 256,
         'ent_emb_dim' : 256,
@@ -36,14 +34,18 @@ def train_kge(iters=50000, lr=1e-4, batch_size=512, margin=0.5):
     }
     args = SimpleNamespace(**config)
 
-    data = load_dataset(data_name_or_path)
-    data = data['train']
+    data = pd.read_csv(f"../data/all_triple.csv")
 
-    df = pd.DataFrame.from_dict({
-            "head":data['head'], 
-            "relation":data['relation'], 
-            "tail":data['tail']
-        })
+    triple_list = []
+    for index in tqdm(range(len(data))):
+        
+        triple_dict = {}
+        triple_dict["head"] = str(data['h'][index])
+        triple_dict["relation"] = str(data['r'][index])
+        triple_dict["tail"] = str(data['t'][index])
+    
+        triple_list.append(triple_dict)
+    df = pd.DataFrame(triple_list).drop_duplicates().reset_index(drop=True)
     
     ratingmap = {rate : i for i , rate in enumerate(df['relation'])}
     entity_ori = np.concatenate([df['head'].values ,df['tail'].values])
