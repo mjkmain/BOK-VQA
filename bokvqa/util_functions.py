@@ -21,10 +21,8 @@ import argparse
 if __name__ == "__main__":
     print(os.getcwd())
 
-# KGE_DIR = "/PATH/TO/SAVED-KGE"
-KGE_DIR = "/home/nips/BOK-VQA/bokvqa/KGE-train"
-# DATA_DIR = "/PATH/TO/DATA"
-DATA_DIR = "/home/nips/BOK-VQA/bokvqa/data"
+KGE_DIR = "/PATH/TO/SAVED-KGE" # Path of 'KGE-train' directory. 
+DATA_DIR = "/PATH/TO/DATA" # Path of 'data' directory.
 
 class AverageMeter:
     def __init__(self):
