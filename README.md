@@ -20,7 +20,25 @@ external knowledge.
 
 # Training & Test Code
 
-## 0. Download Images
+## 1. Environmental settings
+### 1.1 Clone this repository 
+
+```bash
+git clone https://github.com/mjkmain/BOK-VQA.git
+cd BOK-VQA
+```
+
+### 1.2 Install packages
+```bash
+python3 -m venv [env_name]
+source [env_name]/bin/activate
+```
+
+```bash
+pip install -e .
+```
+
+### 1.3 Download Images
 
 > You can find our dataset at [AI-Hub](https://aihub.or.kr/aihubdata/data/view.do?currMenu=&topMenu=&aihubDataSe=data&dataSetSn=71357)
 
@@ -47,24 +65,6 @@ Also, you can find the preprocessed CSV data in the `data` directory.
 - **BOKVQA_data_test_en.csv**: English BOKVQA data for testing.
 - **BOKVQA_data_ko.csv**: Korean BOKVQA data for training.
 - **BOKVQA_data_test_ko.csv**: Korean BOKVQA data for testing.
-
-## 1. Environmental settings
-### 1.1 Clone this repository 
-
-```bash
-git clone https://github.com/mjkmain/BOK-VQA.git
-cd BOK-VQA
-```
-
-### 1.2 Install packages
-```bash
-python3 -m venv [env_name]
-source [env_name]/bin/activate
-```
-
-```bash
-pip install -e .
-```
 
 ## 2. Train KGE 
 > At `KGE-train` directory,
