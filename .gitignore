@@ -4,3 +4,4 @@ bokvqa/KGE-train/kge_save/
 bokvqa/BOK-VQA-train/saved_model/
 __pycache__/
 bokvqa/data/image/
+bokvqa.egg-info/
