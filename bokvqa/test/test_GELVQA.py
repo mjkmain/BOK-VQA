@@ -42,11 +42,11 @@ train_transform, valid_transform = get_transform()
 train_data, valid_data, triple_ans_list, triple_num_target, gold_ans_list, gold_num_target = get_data(args)
 KGEModel, kg, emb_entity_, emb_rel_ = get_KGE(config, args.kge_data, args.kge_model)
 
-test_data = pd.read_csv(f"./data/BOKVQA_data_test_{args.lang}.csv")
+test_data = pd.read_csv(f"../data/BOKVQA_data_test_{args.lang}.csv")
 test_dataset = GELVQATestDataset(tokenizer, test_data, gold_ans_list, triple_ans_list, config.max_token, valid_transform, config, emb_entity_, emb_rel_, kg)
 
 model = GELVQA(gold_num_target, triple_num_target)
-model.load_state_dict(torch.load(f"saved_model/{args.file_name}"))
+model.load_state_dict(torch.load(os.path.join(get_save_path(), args.file_name)))
 model = model.to(device)
 
 model.eval()

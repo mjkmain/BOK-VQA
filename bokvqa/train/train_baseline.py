@@ -130,4 +130,4 @@ if __name__ == '__main__':
         print(f"BEST VALID ACC: {best_acc:2.2f}")
 
     print(f"\nSave the best acc model in epoch {best_epoch} : {best_acc}%")
-    torch.save(best_acc_model.state_dict(), f"./{get_save_path()}/{version}_{best_acc:.2f}.pt")
+    torch.save(best_acc_model.state_dict(), os.path.join(get_save_path(), f"{version}_{best_acc:.2f}.pt"))

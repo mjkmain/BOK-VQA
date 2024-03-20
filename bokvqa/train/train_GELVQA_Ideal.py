@@ -136,4 +136,4 @@ if __name__ == '__main__':
 
         # print(f"[{epoch:2}/{config.n_epoch:2}] TRAIN LOSS: {loss_train.avg:.4f} TRAIN ACC: {acc_train.avg*100:2.2f} | VALID LOSS: {loss_valid.avg:.4f} | VALID ACC: {acc_valid.avg*100:2.2f} | BEST VALID ACC: {best_acc:.4f} |")
     print(f"\nSave the best acc model in epoch {best_epoch} : {best_acc}%")
-    torch.save(best_acc_model.state_dict(), f"./{get_save_path()}/{version}_{best_acc:.2f}.pt")
+    torch.save(best_acc_model.state_dict(), os.path.join(get_save_path(), f"{version}_{best_acc:.2f}.pt"))

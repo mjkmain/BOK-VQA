@@ -226,4 +226,4 @@ def get_test_arguments():
     return parser.parse_args()
 
 def get_save_path():
-    return "saved_model"
+    return "../saved_model"

@@ -40,11 +40,11 @@ tokenizer = get_tokenizer()
 train_transform, valid_transform = get_transform()
 train_data, valid_data, _, _, gold_ans_list, gold_num_target = get_data(args)
 
-test_data = pd.read_csv(f"./data/BOKVQA_data_test_{args.lang}.csv")
+test_data = pd.read_csv(f"../data/BOKVQA_data_test_{args.lang}.csv")
 test_dataset = BaselineTestDataset(tokenizer, test_data, gold_ans_list, config.max_token, valid_transform, config)
 
 model = BaselineModel(gold_num_target)
-model.load_state_dict(torch.load(f"saved_model/{args.file_name}"))
+model.load_state_dict(torch.load(os.path.join(get_save_path(), args.file_name)))
 model = model.to(device)
 
 model.eval()

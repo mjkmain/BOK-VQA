@@ -25,16 +25,27 @@ external knowledge.
 > You can find our dataset at [AI-Hub](https://aihub.or.kr/aihubdata/data/view.do?currMenu=&topMenu=&aihubDataSe=data&dataSetSn=71357)
 
 
-## 1. Run setup.sh
-At /BOK-VQA/, run `setup.sh`
+## 1. Environmental settings
+### 1.1 Clone this repository 
 
 ```bash
-sh setup.sh
+git clone https://github.com/mjkmain/BOK-VQA.git
+cd BOK-VQA
+```
+
+### 1.2 Install packages
+```bash
+python3 -m venv [env_name]
+source [env_name]/bin/activate
+```
+
+```bash
+pip install -e .
 ```
 
 ## 2. Train KGE 
 
-First, we need to train the KGE before training the VQA model.
+First, you need to train the KGE before training the VQA model.
 
 ```bash
 python kge_convkb_train.py 
@@ -42,7 +53,7 @@ python kge_convkb_train.py
 
 When the end of the training, you'll find the saved files in the `kge_save` directory.
 
-**You need to change the `kge_dir` path in the `util_functions.py'**
+**You need to change the `KGE_DIR` path in the `util_functions.py'**
 
 ## 3. Train the VQA model
 
@@ -71,6 +82,7 @@ python train_GEL-VQA-TF.py --lang ['ko', 'en', 'bi']
 ```bash
 python train_GEL-VQA-TF-ATTN.py --lang ['ko', 'en', 'bi'] 
 ```
+**You need to change the `DATA_DIR` path in the `vqa_datasets.py'**
 
 ### arguments
 - `--lang`: Selects the language for training.
@@ -116,7 +128,7 @@ python test_GEL-VQA-TF-ATTN.py --file_name [FILENAME] --lang ['ko', 'en', 'bi']
 
 The `file_name` is organized as follows:
 
-    [model_name]_[lang]_[fold]_[accuracy].pt
+    [model_name]_[lang]_[accuracy].pt
 
 ### Contact
 mjkmain@seoultech.ac.kr
