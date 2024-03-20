@@ -1,6 +1,6 @@
 bokvqa/make_dataset/
 bokvqa.egg-info/
-.bok-vqa/
+.bokvqa_env/
 bokvqa/KGE-train/kge_save/
 bokvqa/saved_model/
 __pycache__/

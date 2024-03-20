@@ -3,7 +3,7 @@ from PIL import Image
 import numpy as np
 import os
 
-IMAGE_DIR = "/home/nips/BOK-VQA/bokvqa/data/image"
+IMAGE_DIR = "/PATH/TO/IMAGE_DIR" # Path of 'image' directory.
 
 class BaselineDataset(torch.utils.data.Dataset):
     def __init__(self, tokenizer, data, gold_ans_list, max_token, transform, config):
