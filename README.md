@@ -44,6 +44,7 @@ pip install -e .
 ```
 
 ## 2. Train KGE 
+> At `KGE-train` directory,
 
 First, you need to train the KGE before training the VQA model.
 
@@ -56,6 +57,7 @@ When the end of the training, you'll find the saved files in the `kge_save` dire
 **You need to change the `KGE_DIR` and `DATA_DIR` path in the `util_functions.py'**
 
 ## 3. Train the VQA model
+> At `train` directory,
 
 * To train the BASELINE model, use the following command:
 
@@ -98,6 +100,7 @@ python train_GEL-VQA_Ideal.py --lang en
 After training, you can find the saved VQA model file in the saved_model directory.
 
 ## 4. Test
+> At `test` directory,
 
 * To test the BASELINE model, use the following command:
 ```bash
