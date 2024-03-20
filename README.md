@@ -77,7 +77,7 @@ python kge_convkb_train.py
 
 When the end of the training, you'll find the saved files in the `kge_save` directory.
 
-**You need to change the `KGE_DIR` and `DATA_DIR` path in the `util_functions.py'**
+**You need to change the `KGE_DIR` and `DATA_DIR` path in the `util_functions.py' and `IMAGE_DIR` path in the `vqa_datasets.py'**
 
 ## 3. Train the VQA model
 > At `train` directory,
@@ -107,7 +107,6 @@ python train_GEL-VQA-TF.py --lang ['ko', 'en', 'bi']
 ```bash
 python train_GEL-VQA-TF-ATTN.py --lang ['ko', 'en', 'bi'] 
 ```
-**You need to change the `IMAGE_DIR` path in the `vqa_datasets.py'**
 
 ### arguments
 - `--lang`: Selects the language for training.
