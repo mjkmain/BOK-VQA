@@ -1,6 +1,0 @@
-README.md
-setup.py
-bokvqa.egg-info/PKG-INFO
-bokvqa.egg-info/SOURCES.txt
-bokvqa.egg-info/dependency_links.txt
-bokvqa.egg-info/top_level.txt
