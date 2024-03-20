@@ -17,8 +17,6 @@ from transformers import AutoTokenizer
 import transformers
 import torchvision.models as models
 import argparse
-from datasets import load_dataset
-import datasets
 
 if __name__ == "__main__":
     print(os.getcwd())
