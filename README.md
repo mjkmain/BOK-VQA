@@ -20,10 +20,33 @@ external knowledge.
 
 # Training & Test Code
 
-## Overview
+## 0. Download Images
 
 > You can find our dataset at [AI-Hub](https://aihub.or.kr/aihubdata/data/view.do?currMenu=&topMenu=&aihubDataSe=data&dataSetSn=71357)
 
+After the download is complete, place the image directory inside the data directory.
+
+Your directory structure will then like following:
+```
+┗━━━ data
+      ┣━━━ image
+      ┃     ┗━━━ 121100220220707140119.jpg
+      ┃     ┗━━━ 121100220220707140304.jpg
+      ┃     ┗━━━ 121100520220830104341.jpg
+      ┃     ┗━━━ ...
+      ┗━━━ all_triple.csv
+      ┗━━━ BOKVQA_data_en.csv
+      ┗━━━ BOKVQA_data_ko.csv
+      ┗━━━ BOKVQA_data_test_en.csv
+      ┗━━━ BOKVQA_data_test_ko.csv
+```
+Also, you can find the preprocessed CSV data in the `data` directory.
+
+- **all_triple.csv** : The entire knowledge base consisting of 282,533 triples.
+- **BOKVQA_data_en.csv**: English BOKVQA data for training.
+- **BOKVQA_data_test_en.csv**: English BOKVQA data for testing.
+- **BOKVQA_data_ko.csv**: Korean BOKVQA data for training.
+- **BOKVQA_data_test_ko.csv**: Korean BOKVQA data for testing.
 
 ## 1. Environmental settings
 ### 1.1 Clone this repository 
