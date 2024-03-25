@@ -95,30 +95,9 @@ When the end of the training, you'll find the saved files in the `kge_save` dire
 ## 3. Train the VQA model
 > At `train` directory,
 
-* To train the BASELINE model, use the following command:
-
-```bash
-python train_baseline.py --lang ['ko', 'en', 'bi'] 
-```
-
-* To train the GEL-VQA-Ideal model, use the following command:
-```bash
-python train_GEL-VQA_Ideal.py --lang ['ko', 'en', 'bi'] 
-```
-
 * To train the GEL-VQA model, use the following command:
 ```bash
 python train_GEL-VQA.py --lang ['ko', 'en', 'bi'] 
-```
-
-* To train the GEL-VQA-TF model, use the following command:
-```bash
-python train_GEL-VQA-TF.py --lang ['ko', 'en', 'bi'] 
-```
-
-* To train the GEL-VQA-TF-ATTN model, use the following command:
-```bash
-python train_GEL-VQA-TF-ATTN.py --lang ['ko', 'en', 'bi'] 
 ```
 
 ### arguments
@@ -137,29 +116,9 @@ After training, you can find the saved VQA model file in the saved_model directo
 ## 4. Test
 > At `test` directory,
 
-* To test the BASELINE model, use the following command:
-```bash
-python test_baseline.py --file_name [FILENAME] --lang ['ko', 'en', 'bi']
-```
-
-* To test the GEL-VQA-Ideal model, use the following command:
-```bash
-python test_GEL-VQA-Ideal.py --file_name [FILENAME] --lang ['ko', 'en', 'bi']
-```
-
 * To test the GEL-VQA model, use the following command:
 ```bash
 python test_GEL-VQA.py --file_name [FILENAME] --lang ['ko', 'en', 'bi']
-```
-
-* To test the GEL-VQA-TF model, use the following command:
-```bash
-python test_GEL-VQA.py --file_name [FILENAME] --lang ['ko', 'en', 'bi']
-```
-
-* To test the GEL-VQA-TF-ATTN model, use the following command:
-```bash
-python test_GEL-VQA-TF-ATTN.py --file_name [FILENAME] --lang ['ko', 'en', 'bi']
 ```
 
 **NOTE** : The GEL-VQA model and the GEL-VQA-TF model use the same test file.
