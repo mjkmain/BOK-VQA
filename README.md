@@ -121,8 +121,6 @@ After training, you can find the saved VQA model file in the saved_model directo
 python test_GEL-VQA.py --file_name [FILENAME] --lang ['ko', 'en', 'bi']
 ```
 
-**NOTE** : The GEL-VQA model and the GEL-VQA-TF model use the same test file.
-
 The `file_name` is organized as follows:
 
     [model_name]_[lang]_[accuracy].pt
